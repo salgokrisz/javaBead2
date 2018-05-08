@@ -42,17 +42,22 @@ public abstract class Item <T> implements Comparable<Item>{
     return outLine;
   }
 
-  public void setState(){
-    if (this.state == ItemState.ORDERED){
-      this.state = ItemState.PROCESSING;
+
+  public void setState(ItemState state) {
+    if (this.state.equals(ItemState.ORDERED) && state.equals(ItemState.PROCESSING)) {
+        this.state = state;
     }
-    else if(this.state == ItemState.PROCESSING){
-      this.state = ItemState.READY;
+    else if (this.state.equals(ItemState.PROCESSING) && state.equals(ItemState.READY)) {
+        this.state = state;
     }
-    else if (this.state == ItemState.READY){
-      this.state = ItemState.DELIVERED;
+    else if (this.state.equals(ItemState.READY) && state.equals(ItemState.DELIVERED)) {
+        this.state = state;
+    }
+    else if ((this.state.equals(ItemState.ORDERED) || state.equals(ItemState.PROCESSING)) && state.equals(ItemState.CANCELED)) {
+        this.state = state;
     }
   }
+
 
   public int getPrice(){
     return this.price;
